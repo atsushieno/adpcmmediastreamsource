@@ -9,9 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using MoonVorbis;
+using Commons.AdpcmMediaStreamSource;
 
-namespace MoonVorbisTest
+namespace AdpcmMediaStreamSourceTest
 {
     public partial class Page : UserControl
     {
@@ -26,7 +26,7 @@ namespace MoonVorbisTest
             ofd.ShowDialog();
             if (ofd.File == null)
                 return;
-            OggMediaStreamSource mediaSource = new OggMediaStreamSource(ofd.File.OpenRead());
+            AdpcmMediaStreamSource mediaSource = new AdpcmMediaStreamSource(ofd.File.OpenRead());
             me.SetSource(mediaSource);
         }
     }

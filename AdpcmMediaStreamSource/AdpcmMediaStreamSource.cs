@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Media;
 using MediaParsers;
 
-namespace Commons.Adpcm
+namespace Commons.AdpcmMediaStreamSource
 {
     public class DebugWriter : TextWriter
     {
@@ -53,7 +53,7 @@ namespace Commons.Adpcm
 
 		IEnumerable<SampleBuffer> DecodeSamples ()
 		{
-			foreach (byte [] buf in soure.Decode ())
+			foreach (byte [] buf in source.DecodeSamples ())
 				yield return new SampleBuffer (buf, 0, buf.Length);
 		}
 

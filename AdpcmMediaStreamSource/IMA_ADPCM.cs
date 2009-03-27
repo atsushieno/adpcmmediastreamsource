@@ -15,7 +15,7 @@ namespace Commons.AdpcmMediaStreamSource
 
     internal class IMA_ADPCM : Stream
     {
-        private FileStream fs;
+        private Stream fs;
         private int length, position, blocklen;
         private ushort Channels;
         private int SamplesPerSec;
@@ -69,10 +69,10 @@ namespace Commons.AdpcmMediaStreamSource
 
             var ms = new MemoryStream();
             var bw = new BinaryWriter(ms);
-            bw.Write(Encoding.ASCII.GetBytes("RIFF"));
+            bw.Write(Encoding.UTF8.GetBytes("RIFF"));
             bw.Write(length - 8);
-            bw.Write(Encoding.ASCII.GetBytes("WAVE"));
-            bw.Write(Encoding.ASCII.GetBytes("fmt "));
+            bw.Write(Encoding.UTF8.GetBytes("WAVE"));
+            bw.Write(Encoding.UTF8.GetBytes("fmt "));
             bw.Write(16);
             bw.Write((ushort)WAVE_FORMAT.PCM); // FormatTag
             bw.Write(Channels);
@@ -80,7 +80,7 @@ namespace Commons.AdpcmMediaStreamSource
             bw.Write(SamplesPerSec * Channels * 2); // AvgBytesPerSec
             bw.Write((ushort)(Channels * 2)); // BlockAlign
             bw.Write((ushort)16); // BitsPerSample
-            bw.Write(Encoding.ASCII.GetBytes("data"));
+            bw.Write(Encoding.UTF8.GetBytes("data"));
             bw.Write(datalen);
             Header = ms.ToArray();
             bw.Close();
@@ -90,7 +90,7 @@ namespace Commons.AdpcmMediaStreamSource
         private int CacheNo = -1;
         private byte[] Cache;
 
-        public IEnumerable<byte []> DecodeBuffers ()
+        public IEnumerable<byte []> DecodeSamples ()
         {
                 position = 0;
                 fs.Write(Header, 0, Header.Length);
@@ -201,7 +201,7 @@ namespace Commons.AdpcmMediaStreamSource
             return ret;
         }
 
-        private string ReadID() { return Encoding.ASCII.GetString(ReadBytes(4), 0, 4); }
+        private string ReadID() { return Encoding.UTF8.GetString(ReadBytes(4), 0, 4); }
         private int ReadInt32() { return BitConverter.ToInt32(ReadBytes(4), 0); }
         private uint ReadUInt32() { return BitConverter.ToUInt32(ReadBytes(4), 0); }
         private ushort ReadUInt16() { return BitConverter.ToUInt16(ReadBytes(2), 0); }
