@@ -17,9 +17,9 @@ namespace Commons.AdpcmMediaStreamSource
     {
         private Stream fs;
         private int length, position, blocklen;
-        private ushort Channels;
-        private int SamplesPerSec;
-        private ushort BlockAlign;
+        public ushort Channels;
+        public int SamplesPerSec;
+        public ushort BlockAlign;
         private int DataPosition, DataSize;
         private byte[] Header;
 
@@ -93,7 +93,6 @@ namespace Commons.AdpcmMediaStreamSource
         public IEnumerable<byte []> DecodeSamples ()
         {
                 position = 0;
-                fs.Write(Header, 0, Header.Length);
                 int blocks = DataSize / BlockAlign;
                 for (int i = 0; i < blocks; i++)
                 {

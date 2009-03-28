@@ -105,11 +105,11 @@ namespace Commons.AdpcmMediaStreamSource
             // Initialize the Mp3 data structures used by the Media pipeline with state from the first frame.
             WaveFormatExtensible wfx = new WaveFormatExtensible();
             wfx.FormatTag = 1; // PCM
-            wfx.Channels = 2;
-            wfx.SamplesPerSec = 44100;
-            wfx.AverageBytesPerSecond = 44100 * 2 * 2;
-            wfx.BlockAlign = 4;
-            wfx.BitsPerSample = 16;
+            wfx.Channels = (short) this.source.Channels;
+            wfx.SamplesPerSec = this.source.SamplesPerSec;
+            wfx.BlockAlign = (short) wfx.BlockAlign;
+            wfx.BitsPerSample = wfx.BitsPerSample;
+            wfx.AverageBytesPerSecond = wfx.SamplesPerSec * wfx.BlockAlign;
             wfx.Size = 0;
 
             mediaStreamAttributes[MediaStreamAttributeKeys.CodecPrivateData] = wfx.ToHexString();
