@@ -107,9 +107,9 @@ namespace Commons.AdpcmMediaStreamSource
             wfx.FormatTag = 1; // PCM
             wfx.Channels = (short) this.source.Channels;
             wfx.SamplesPerSec = this.source.SamplesPerSec;
-            wfx.BlockAlign = (short) wfx.BlockAlign;
-            wfx.BitsPerSample = wfx.BitsPerSample;
-            wfx.AverageBytesPerSecond = wfx.SamplesPerSec * wfx.BlockAlign;
+            wfx.BlockAlign = (short) (this.source.Channels * 2);
+            wfx.BitsPerSample = 16;
+            wfx.AverageBytesPerSecond = wfx.SamplesPerSec * wfx.Channels * 2;
             wfx.Size = 0;
 
             mediaStreamAttributes[MediaStreamAttributeKeys.CodecPrivateData] = wfx.ToHexString();

@@ -52,8 +52,11 @@ namespace Commons.AdpcmMediaStreamSource
                     case "data":
                         DataSize = ReadInt32();
                         DataPosition = (int)fs.Position;
+			fs.Position += DataSize;
                         break;
                     default:
+			var size = ReadInt32();
+			fs.Position += size;
                         break;
                 }
             }
